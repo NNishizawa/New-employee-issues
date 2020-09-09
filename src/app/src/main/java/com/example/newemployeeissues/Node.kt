@@ -14,4 +14,20 @@ class Node(val name:String) {
         System.out.println("$deep$space$name")
         childlist.forEach {it.show(deep + 1)}
     }
+
+    fun find(findName: String, deep: Int = 0):Node? {
+        if(findName.equals(name)){
+            return this
+        }
+
+        childlist.forEach {
+            var result : Node?
+            result = it.find(findName, deep + 1)
+            if(result != null) {
+                return result
+            }
+        }
+
+        return null
+    }
 }
