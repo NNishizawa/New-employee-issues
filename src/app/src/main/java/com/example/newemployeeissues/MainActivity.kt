@@ -5,7 +5,7 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    var state :State = State.IDLE
+    val stateMachine = StateMachine(listOf(StateIdle(), StatePlaying(), StateRecording()))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,60 +26,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun eventChg(event: Event) {
         when(event) {
-            Event.BUTTON_PLAY -> { eventPlayButton() }
-            Event.BUTTON_RECORD -> { eventRecordButton() }
-            Event.BUTTON_STOP -> { eventStopButton() }
+            Event.BUTTON_PLAY -> { stateMachine.setState(State.PLAYING) }
+            Event.BUTTON_RECORD -> { stateMachine.setState(State.RECORDING) }
+            Event.BUTTON_STOP -> { stateMachine.setState(State.IDLE) }
         }
-    }
-
-    private fun eventPlayButton() {
-        when (state) {
-            State.IDLE -> {
-                // TODO("再生開始")
-                System.out.println("再生開始")
-            }
-            State.PLAYING -> {}
-            State.RECORDING -> {
-                // TODO("録画停止")
-                System.out.println("録画停止")
-
-                // TODO("再生開始")
-                System.out.println("再生開始")
-            }
-        }
-        state = State.PLAYING
-    }
-
-    private fun eventRecordButton() {
-        when (state) {
-            State.IDLE -> {
-                // TODO("録画開始")
-                System.out.println("録画開始")
-            }
-            State.PLAYING -> {
-                // TODO("再生停止")
-                System.out.println("再生停止")
-
-                // TODO("録画開始")
-                System.out.println("録画開始")
-            }
-            State.RECORDING -> {}
-        }
-        state = State.RECORDING
-    }
-
-    private fun eventStopButton() {
-        when (state) {
-            State.IDLE -> {}
-            State.PLAYING -> {
-                // TODO("再生停止")
-                System.out.println("再生停止")
-            }
-            State.RECORDING -> {
-                // TODO("録画停止")
-                System.out.println("録画停止")
-            }
-        }
-        state = State.IDLE
     }
 }
