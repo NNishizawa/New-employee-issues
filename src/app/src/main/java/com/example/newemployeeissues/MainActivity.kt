@@ -2,13 +2,15 @@ package com.example.newemployeeissues
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    var node : Node = Node("")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Node("宇宙").also {
+        node = Node("宇宙").also {
             it.childlist.add(Node("天の川銀河").also {
                 it.childlist.add(Node("太陽系").also {
                     it.childlist.add(Node("地球").also {
@@ -35,6 +37,12 @@ class MainActivity : AppCompatActivity() {
             })
             it.childlist.add(Node("アンドロメダ銀河"))
             it.show()
+        }
+
+        btn_go_find.setOnClickListener {
+            node.find("宇宙")?.show()
+            node.find("日本")?.show()
+            node.find("hoge")?.show()
         }
     }
 }
